@@ -5,7 +5,7 @@
 namespace StoresG8.API.Migrations
 {
     /// <inheritdoc />
-    public partial class statescities : Migration
+    public partial class statesCities : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

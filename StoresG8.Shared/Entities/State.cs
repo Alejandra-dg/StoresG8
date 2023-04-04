@@ -14,7 +14,7 @@ namespace StoresG8.Shared.Entities
 
         public int CountryId { get; set; }
 
-        public ICollection<City> Cities { get; set; }
+        public ICollection<City>? Cities { get; set; }
 
         public Country? Country { get; set; }
 
