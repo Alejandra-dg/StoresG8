@@ -31,6 +31,8 @@ namespace StoresG8.API.Data
 
             modelBuilder.Entity<State>().HasIndex(x => x.Name).IsUnique();
 
+            modelBuilder.Entity<City>().HasIndex(x => x.Name).IsUnique();
+
         }
 
 
