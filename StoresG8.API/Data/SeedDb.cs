@@ -16,17 +16,17 @@ namespace StoresG8.API.Data
         public async Task SeedAsync()
         {
             await _context.Database.EnsureCreatedAsync();
-            await CheckCountriesAsync();
+            await CheckCategoriesAsync();
         }
 
 
-        private async Task CheckCountriesAsync()
+        private async Task CheckCategoriesAsync()
         {
-            if (!_context.Countries.Any())
+            if (!_context.Categories.Any())
             {
-                _context.Countries.Add(new Country { Name = "Colombia" });
-                _context.Countries.Add(new Country { Name = "Brasil" });
-                _context.Countries.Add(new Country { Name = "Argentina" });
+                _context.Categories.Add(new Category { Name = "Ropa" });
+                _context.Categories.Add(new Category { Name = "calzado" });
+                _context.Categories.Add(new Category { Name = "Tecnologia" });
 
             }
 

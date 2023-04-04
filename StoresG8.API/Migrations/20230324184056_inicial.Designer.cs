@@ -12,7 +12,7 @@ namespace StoresG8.API.Migrations
 {
     [DbContext(typeof(DataContext))]
     [Migration("20230324184056_inicial")]
-    partial class inicial
+    partial class Inicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
