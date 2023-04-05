@@ -11,11 +11,9 @@ namespace StoresG8.API.Data
             
         }
 
-        public DbSet<City> Cities { get; set; }
+     
 
         public DbSet<Country> Countries { get; set; }
-
-        public DbSet<State> States { get; set; }
 
         public DbSet<Category> Categories { get; set; }
 
@@ -29,9 +27,6 @@ namespace StoresG8.API.Data
 
             modelBuilder.Entity<Category>().HasIndex(x => x.Name).IsUnique();
 
-            modelBuilder.Entity<State>().HasIndex(x => x.Name).IsUnique();
-
-            modelBuilder.Entity<City>().HasIndex(x => x.Name).IsUnique();
 
         }
 

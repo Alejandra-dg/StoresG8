@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-
+// Es generico, Respuesta y error tambien es utilizada
 namespace StoresG8.WEB.Repositories
 {
     public class HttpResponseWrapper<T>

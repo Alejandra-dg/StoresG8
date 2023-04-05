@@ -16,7 +16,7 @@
     <button class="btn btn-primary" type="submit">Guardar Cambios</button>
     <button class="btn btn-success" @onclick="ReturnAction">Regresar</button>
 </EditForm>
-
+<!--Llave C#-->
 @code {
 
 
@@ -32,10 +32,12 @@
     [Parameter]
     public Country Country { get; set; } = null!;
 
+    // El boton hace el submit 
     [EditorRequired]
     [Parameter]
     public EventCallback OnValidSubmit { get; set; }
 
+    // El boton hace el regreso a la pagina anterior 
     [EditorRequired]
     [Parameter]
     public EventCallback ReturnAction { get; set; }
@@ -59,7 +61,7 @@
         var result = await swal.FireAsync(new SweetAlertOptions
             {
                 Title = "Confirmación",
-                Text = "¿Está seguro de abandonar la página?(perderá los cambios..)",
+                Text = "¿Está seguro de abandonar la página? (podrias perder los cambios..)",
                 Icon = SweetAlertIcon.Warning,
                 ShowCancelButton = true
             });

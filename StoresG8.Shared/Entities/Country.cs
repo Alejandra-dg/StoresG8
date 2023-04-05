@@ -19,8 +19,6 @@ namespace StoresG8.Shared.Entities
 
         public int CountryId { get; set; }
 
-        public State? States { get; set; }
-
 
 
 

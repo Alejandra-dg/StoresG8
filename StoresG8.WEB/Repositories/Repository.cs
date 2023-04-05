@@ -52,7 +52,8 @@ namespace StoresG8.WEB.Repositories
 
 
 
-
+        // La clase tiene la acción el Http Esta carpeta se reutiliza solo se cambia 
+        // El nombre del proyecto. 
         public async Task<HttpResponseWrapper<object>> Delete(string url)
         {
             var responseHTTP = await _httpClient.DeleteAsync(url);

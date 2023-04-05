@@ -13,13 +13,14 @@ builder.Services.AddSwaggerGen();
 
 //Inyección de dependencias del servicio SQl Server
 builder.Services.AddDbContext<DataContext > (x => x.UseSqlServer("name=DefaultConnection"));
-
+// Inyección de el SeedDb
 builder.Services.AddTransient<SeedDb>();
 
 
 
 var app = builder.Build();
 
+// esta función ayuda a que las funciones del SeedData Se realicen
 SeedData(app);
 
 void SeedData(WebApplication app)
