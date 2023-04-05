@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Stores.Shared.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,7 +18,15 @@ namespace StoresG8.Shared.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string? Name { get; set; } = null;
 
-        public int CountryId { get; set; }
+
+        // Los paises tienen varios estados  esto relaciona una tabla con otra
+        public ICollection<State>? States { get; set; }
+
+        [Display(Name = "Estados/Departamentos")]
+
+        //Indica un contador de estados/dptos, si ya se han guardado algunas
+        public int StatesNumber => States == null ? 0 : States.Count;
+
 
 
 
