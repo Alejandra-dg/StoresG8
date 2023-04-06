@@ -18,17 +18,12 @@ namespace StoresG8.Shared.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string? Name { get; set; } = null;
 
-
-        // Los paises tienen varios estados  esto relaciona una tabla con otra
         public ICollection<State>? States { get; set; }
 
+        //Contamos  Estados por Pais
+
         [Display(Name = "Estados/Departamentos")]
-
-        //Indica un contador de estados/dptos, si ya se han guardado algunas
         public int StatesNumber => States == null ? 0 : States.Count;
-
-
-
 
 
     }
