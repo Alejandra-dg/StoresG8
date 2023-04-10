@@ -5,11 +5,12 @@
 namespace StoresG8.API.Migrations
 {
     /// <inheritdoc />
-    public partial class StatesWithCities : Migration
+    public partial class StateWithCities : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
-        {  
+        {
+
             migrationBuilder.CreateTable(
                 name: "States",
                 columns: table => new
@@ -51,25 +52,15 @@ namespace StoresG8.API.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cities_Name",
+                name: "IX_Cities_StateId_Name",
                 table: "Cities",
-                column: "Name",
+                columns: new[] { "StateId", "Name" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cities_StateId",
-                table: "Cities",
-                column: "StateId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_States_CountryId",
+                name: "IX_States_CountryId_Name",
                 table: "States",
-                column: "CountryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_States_Name",
-                table: "States",
-                column: "Name",
+                columns: new[] { "CountryId", "Name" },
                 unique: true);
         }
 

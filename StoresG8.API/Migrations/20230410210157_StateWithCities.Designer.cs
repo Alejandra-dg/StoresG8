@@ -11,8 +11,8 @@ using StoresG8.API.Data;
 namespace StoresG8.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230406012023_StatesWithCities")]
-    partial class StatesWithCities
+    [Migration("20230410210157_StateWithCities")]
+    partial class StateWithCities
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,10 +42,8 @@ namespace StoresG8.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
+                    b.HasIndex("StateId", "Name")
                         .IsUnique();
-
-                    b.HasIndex("StateId");
 
                     b.ToTable("Cities");
                 });
@@ -68,9 +66,7 @@ namespace StoresG8.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CountryId");
-
-                    b.HasIndex("Name")
+                    b.HasIndex("CountryId", "Name")
                         .IsUnique();
 
                     b.ToTable("States");

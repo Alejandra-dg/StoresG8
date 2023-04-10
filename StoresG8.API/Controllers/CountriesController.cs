@@ -24,10 +24,24 @@ namespace StoresG8.API.Controllers
         [HttpGet]
         public async Task<ActionResult> Get()
         {
-
-            return Ok(await _context.Countries.ToListAsync());
+            
+            return Ok(await _context.Countries
+                //Incluide une los estados y los paises, relacion entre las tablas
+                .Include(x => x.States)
+                .ToListAsync());
 
         }
+
+        // Get FULL hace un join con estados y ciudades una union entre ellas 
+        [HttpGet("full")]
+        public async Task<ActionResult> GetFull()
+        {
+            return Ok(await _context.Countries
+                .Include(x => x.States!)
+                .ThenInclude(x => x.Cities)
+                .ToListAsync());
+        }
+
 
         //´Método GET con parámetro
 

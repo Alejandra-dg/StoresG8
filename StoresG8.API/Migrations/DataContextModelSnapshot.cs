@@ -39,10 +39,8 @@ namespace StoresG8.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
+                    b.HasIndex("StateId", "Name")
                         .IsUnique();
-
-                    b.HasIndex("StateId");
 
                     b.ToTable("Cities");
                 });
@@ -65,9 +63,7 @@ namespace StoresG8.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CountryId");
-
-                    b.HasIndex("Name")
+                    b.HasIndex("CountryId", "Name")
                         .IsUnique();
 
                     b.ToTable("States");
