@@ -21,7 +21,7 @@ namespace Stores.Shared.Entities
 
         //Contamos ciudades por pais
 
-        [Display(Name = "Ciudades")]
+        [Display(Name = "Ciudades/Municipios")]
         public int CitiesNumber => Cities == null ? 0 : Cities.Count;
 
     }

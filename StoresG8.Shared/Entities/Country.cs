@@ -18,6 +18,7 @@ namespace StoresG8.Shared.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string? Name { get; set; } = null;
 
+        //Countri tiene una colección de estados 
         public ICollection<State>? States { get; set; }
 
         //Contamos  Estados por Pais

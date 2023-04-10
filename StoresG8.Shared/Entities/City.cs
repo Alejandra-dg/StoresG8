@@ -13,7 +13,7 @@ namespace Stores.Shared.Entities
 
         public int StateId { get; set; }
 
-
+       
         public State? State { get; set; }
     }
 }
