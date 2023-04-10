@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Stores.Shared.Entities;
 using StoresG8.API.Data;
@@ -101,3 +102,4 @@ namespace Stores.API.Controllers
         }
     }
 }
+
