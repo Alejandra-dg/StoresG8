@@ -23,9 +23,9 @@
             <tbody>
                 @foreach (var state in States!)
                 {
-                    <tr>h
+                    <tr>
                         <td>
-                            <a href="/cities/edit/@state.Id" class="btn btn-warning"><i class="oi oi-pencil" />Editar</a>
+                            <a href="/States/edit/@state.Id" class="btn btn-warning"><i class="oi oi-pencil" />Editar</a>
                             <button class="btn btn-danger" @onclick=@(() => DeleteAsync(state))><i class="oi oi-trash" />Borrar</button>
                         </td>
 
