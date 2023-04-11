@@ -1,6 +1,7 @@
 ﻿@page "/states/details/{StateId:int}"
 @using System.Net;
 @using Stores.Shared.Entities;
+@using StoresG8.Shared.Entities;
 @inject IRepository repository
 @inject NavigationManager navigationManager
 @inject SweetAlertService sweetAlertService
@@ -13,7 +14,7 @@ else
 {
     <h3>@state.Name</h3>
     <div class="mb-2">
-        <a class="btn btn-primary" href="/cities/create/@state.Id">Nueva Ciudad</a>
+        <a class="btn btn-primary" href="/cities/create/@state.Id">Nueva Ciuadad</a>
         <a class="btn btn-success" href="/countries/details/@state.CountryId">Regresar</a>
     </div>
 

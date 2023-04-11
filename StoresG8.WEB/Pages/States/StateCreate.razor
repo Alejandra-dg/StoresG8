@@ -1,5 +1,6 @@
-﻿@page "/states/create/{CountryId:int}"
-@using Stores.Shared.Entities;
+﻿@using Stores.Shared.Entities;
+@using StoresG8.Shared.Entities;
+@page "/states/create/{CountryId:int}"
 @inject IRepository repository
 @inject NavigationManager navigationManager
 @inject SweetAlertService sweetAlertService
@@ -36,4 +37,5 @@
         navigationManager.NavigateTo($"/countries/details/{CountryId}");
     }
 }
+
 
