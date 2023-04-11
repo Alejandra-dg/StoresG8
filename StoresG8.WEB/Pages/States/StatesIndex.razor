@@ -16,22 +16,23 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th></th>
+                    
                     <th>Estados</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var state in States!)
                 {
                     <tr>
-                        <td>
-                            <a href="/States/edit/@state.Id" class="btn btn-warning"><i class="oi oi-pencil" />Editar</a>
-                            <button class="btn btn-danger" @onclick=@(() => DeleteAsync(state))><i class="oi oi-trash" />Borrar</button>
-                        </td>
 
                         <td>
                             @state.Name
                         </td>
+                             <td>
+                            <a href="/States/edit/@state.Id" class="btn btn-warning"><i class="oi oi-pencil" />Editar</a>
+                                <button class="btn btn-danger" @onclick=@(() => DeleteAsync(state))><i class="oi oi-trash" />Borrar</button>
+                            </td>
                     </tr>
                 }
             </tbody>
