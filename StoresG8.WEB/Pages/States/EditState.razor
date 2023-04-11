@@ -1,10 +1,12 @@
-﻿@page "/states/edit/{StateId:int}"
-@using Stores.Shared.Entities;
-@using System.Net;
+﻿@using Stores.Shared.Entities;
+@using StoresG8.Shared.Entities;
+@page "/states/edit/{StateId:int}"
 @inject IRepository repository
 @inject NavigationManager navigationManager
 @inject SweetAlertService sweetAlertService
 @inject NavigationManager navigationManager
+@using System.Net;
+
 
 <h3>Editar Estado/Departamento</h3>
 
@@ -62,5 +64,4 @@ else
         navigationManager.NavigateTo($"/countries/details/{state!.CountryId}");
     }
 }
-
 

@@ -51,6 +51,7 @@ namespace StoresG8.API.Controllers
 
             var country = await _context.Countries
                 .Include(x => x.States)
+                .ThenInclude(x => x.Cities)
                 .FirstOrDefaultAsync(x => x.Id == id);
                 
             if (country is null)
