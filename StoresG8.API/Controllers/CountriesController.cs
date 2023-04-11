@@ -49,7 +49,10 @@ namespace StoresG8.API.Controllers
         public async Task<ActionResult> Get(int id)
         {
 
-            var country = await _context.Countries.FirstOrDefaultAsync(x => x.Id == id);
+            var country = await _context.Countries
+                .Include(x => x.States)
+                .FirstOrDefaultAsync(x => x.Id == id);
+                
             if (country is null)
             {
                 return NotFound(); //404

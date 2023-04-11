@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Stores.Shared.Entities;
+using StoresG8.Shared.Entities;
 using StoresG8.API.Data;
+using Stores.Shared.Entities;
 
-namespace Stores.API.Controllers
+namespace StoresG8.API.Controllers
 {
     [ApiController]
     [Route("/api/cities")]

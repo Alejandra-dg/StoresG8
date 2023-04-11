@@ -1,6 +1,7 @@
 ﻿@page "/countries/details/{Id:int}"
-@using System.Net;
 @using Stores.Shared.Entities;
+@using StoresG8.Shared.Entities;
+@using System.Net;
 @inject IRepository repository
 @inject NavigationManager navigationManager
 @inject SweetAlertService sweetAlertService
@@ -17,7 +18,7 @@ else
         <a class="btn btn-success" href="/countries">Regresar</a>
     </div>
 
-    <GenericList MyList="state">
+    <GenericList MyList="states">
         <Body>
             <table class="table table-striped">
                 <thead>
@@ -28,7 +29,7 @@ else
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var state in state!)
+                    @foreach (var state in states!)
                     {
                         <tr>
                             <td>
@@ -52,7 +53,7 @@ else
 
 @code {
     private Country? country;
-    private List<State>? state;
+    private List<State>? states;
 
     [Parameter]
     public int Id { get; set; }
@@ -79,7 +80,7 @@ else
         }
 
         country = responseHttp.Response;
-        state = country!.States!.ToList();
+        states = country!.States!.ToList(); // Estados NULL nos sale error
     }
 
     private async Task DeleteAsync(int id)
@@ -114,4 +115,3 @@ else
         await LoadAsync();
     }
 }
-
