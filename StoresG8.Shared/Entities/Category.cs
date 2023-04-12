@@ -15,7 +15,7 @@ namespace StoresG8.Shared.Entities
         [Display(Name = "Categoria")]  //{0}
         [MaxLength(100, ErrorMessage = "Cuidado el campo {0} no permite más de {1} caracteres ")]  //{1}
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
-        public string Name { get; set; } = null;
+        public string? Name { get; set; } = null;
 
 
 
