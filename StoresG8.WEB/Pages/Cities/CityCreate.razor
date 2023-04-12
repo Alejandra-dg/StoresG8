@@ -1,8 +1,11 @@
 ﻿@page "/cities/create/{StateId:int}"
-@using Stores.Shared.Entities;
+
 @inject IRepository repository
 @inject NavigationManager navigationManager
 @inject SweetAlertService sweetAlertService
+@using Stores.Shared.Entities;
+@using StoresG8.Shared.Entities;
+
 
 <h3>Crear Ciudad</h3>
 
@@ -35,4 +38,5 @@
         navigationManager.NavigateTo($"/states/details/{StateId}");
     }
 }
+
 

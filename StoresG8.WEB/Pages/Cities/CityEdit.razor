@@ -1,10 +1,12 @@
 ﻿@page "/cities/edit/{CityId:int}"
-@using Stores.Shared.Entities;
-@using System.Net;
+
 @inject IRepository repository
 @inject NavigationManager navigationManager
 @inject SweetAlertService sweetAlertService
 @inject NavigationManager navigationManager
+@using Stores.Shared.Entities;
+@using StoresG8.Shared.Entities;
+@using System.Net;
 
 <h3>Editar Ciudad</h3>
 
@@ -60,6 +62,9 @@ else
     {
         cityForm!.FormPostedSuccessfully = true;
         navigationManager.NavigateTo($"/states/details/{city!.StateId}");
+    
+    
     }
-}
 
+
+}
