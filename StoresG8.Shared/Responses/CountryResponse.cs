@@ -1,4 +1,4 @@
-﻿@using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace StoresG8.WEB.Shared.Responses
 {
