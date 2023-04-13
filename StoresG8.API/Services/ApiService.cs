@@ -1,6 +1,6 @@
-﻿using Azure;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using StoresG8.API.Services;
+using StoresG8.API.Services.StoresG8.API.Services;
 using StoresG8.Shared.Responses;
 
 

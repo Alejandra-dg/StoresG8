@@ -2,19 +2,23 @@
 using Microsoft.EntityFrameworkCore;
 using Stores.Shared.Entities;
 using StoresG8.API.Services;
+using StoresG8.API.Services.StoresG8.API.Services;
 using StoresG8.Shared.Entities;
 using StoresG8.Shared.Responses;
+using StoresG8.WEB.Shared.Responses;
 
 namespace StoresG8.API.Data
 {
     public class SeedDb
     {
         private readonly DataContext _context;
+        // variable privada
         private readonly IApiService _apiService;
 
-        public SeedDb(DataContext context, IApiService apiService) 
+        public SeedDb(DataContext context, IApiService apiService) // incluye en el seed el servicio
         {
             _context = context;
+            // uso a la variable de arriba 
             _apiService = apiService;
         }
 
@@ -76,6 +80,7 @@ namespace StoresG8.API.Data
                             if (country.StatesNumber > 0)
                             {
                                 _context.Countries.Add(country);
+                                
                                 await _context.SaveChangesAsync();
                             }
                         }

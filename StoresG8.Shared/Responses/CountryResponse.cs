@@ -4,6 +4,9 @@ namespace StoresG8.WEB.Shared.Responses
 {
     public class CountryResponse
     {
+        // Consumimos por medio del postman
+        // Son parametros que llegan de afuera de la api que vamos a consumir
+        
         [JsonProperty("id")]
         public long Id { get; set; }
 
