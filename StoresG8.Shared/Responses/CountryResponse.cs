@@ -1,8 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿
 
 namespace StoresG8.WEB.Shared.Responses
 {
-    public class CountryResponse
+    using Newtonsoft.Json;
+
+    namespace StoresG8.Shared.Response
+    {
+        public class CountryResponse
     {
         // Consumimos por medio del postman
         // Son parametros que llegan de afuera de la api que vamos a consumir
@@ -16,5 +20,6 @@ namespace StoresG8.WEB.Shared.Responses
         [JsonProperty("iso2")]
         public string? Iso2 { get; set; }
 
+        }
     }
 }
