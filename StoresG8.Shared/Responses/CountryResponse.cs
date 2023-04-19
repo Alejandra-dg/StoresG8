@@ -4,7 +4,7 @@ namespace StoresG8.WEB.Shared.Responses
 {
     using Newtonsoft.Json;
 
-    namespace StoresG8.Shared.Response
+    namespace StoresG8.Shared.Responses
     {
         public class CountryResponse
     {

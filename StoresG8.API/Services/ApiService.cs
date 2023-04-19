@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json;
-using StoresG8.API.Services;
-using StoresG8.API.Services.StoresG8.API.Services;
+
 using StoresG8.Shared.Responses;
+using StoresG8.API.Services.Stores.API.Services;
+using StoresG8.WEB.Shared.Responses;
 
-
-namespace StoresG8.API.Services
+namespace Stores.API.Services
 {
     public class ApiService : IApiService
     {
@@ -16,9 +16,9 @@ namespace StoresG8.API.Services
         public ApiService(IConfiguration configuration)
         {
             _configuration = configuration;
-            _urlBase = _configuration["CountriesAPI:urlBase"]!;
-            _tokenName = _configuration["CountriesAPI:tokenName"]!;
-            _tokenValue = _configuration["CountriesAPI:tokenValue"]!;
+            _urlBase = _configuration["CountriesAPI:urlBase"]!; // Nombre del Api que elejimos y la Url
+            _tokenName = _configuration["CountriesAPI:tokenName"]!; // Nombre del token
+            _tokenValue = _configuration["CountriesAPI:tokenValue"]!; // Valor de token 
         }
 
         public async Task<Response> GetListAsync<T>(string servicePrefix, string controller)
@@ -58,12 +58,12 @@ namespace StoresG8.API.Services
                     IsSuccess = false,
                     Message = ex.Message
                 };
+       
+            
             }
-        }
-
-        Task<Response> IApiService.GetListAsync<T>(string servicePrefix, string controller)
-        {
-            throw new NotImplementedException();
+        
+        
         }
     }
 }
+

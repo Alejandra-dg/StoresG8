@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Stores.API.Services;
 using StoresG8.API.Data;
-using StoresG8.API.Services;
+using StoresG8.API.Services.Stores.API.Services;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);

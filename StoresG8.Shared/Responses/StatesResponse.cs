@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,13 +11,16 @@ namespace StoresG8.Shared.Responses
 
     namespace Stores.Shared.Responses
     {
-        public class CityResponse
+        public class StateResponse
         {
             [JsonProperty("id")]
             public long Id { get; set; }
 
             [JsonProperty("name")]
             public string? Name { get; set; }
+
+            [JsonProperty("iso2")]
+            public string? Iso2 { get; set; }
         }
     }
 
