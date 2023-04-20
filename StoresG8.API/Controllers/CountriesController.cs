@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using StoresG1.API.Helpers;
+using StoresG1.Shared.DTOs;
 using StoresG8.API.Data;
 using StoresG8.Shared.Entities;
 
@@ -22,15 +24,28 @@ namespace StoresG8.API.Controllers
         //Método GET LIST
 
         [HttpGet]
-        public async Task<ActionResult> Get()
+        public async Task<IActionResult> GetAsync([FromQuery] PaginationDTO pagination)
         {
-            
-            return Ok(await _context.Countries
-                //Incluide une los estados y los paises, relacion entre las tablas
-                .Include(x => x.States)
-                .ToListAsync());
+            var queryable = _context.Countries
+                .Include(x => x.States) // RECORRIDO DE PAGINAS DE 1 A 10
+                .AsQueryable();
 
+            return Ok(await queryable
+                .OrderBy(x => x.Name)
+                .Paginate(pagination) 
+                .ToListAsync());
         }
+
+        [HttpGet("totalPages")] // Contar numeros de paginas 
+        public async Task<ActionResult> GetPages([FromQuery] PaginationDTO pagination)
+        {
+            var queryable = _context.Countries.AsQueryable();
+            double count = await queryable.CountAsync();
+            double totalPages = Math.Ceiling(count / pagination.RecordsNumber);
+            return Ok(totalPages);
+        }
+
+
 
         // Get FULL hace un join con estados y ciudades una union entre ellas 
         [HttpGet("full")]
