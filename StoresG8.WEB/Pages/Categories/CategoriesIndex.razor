@@ -5,6 +5,24 @@
 
 <h3>Categorias</h3>
 
+<div class="mb-2" style="display: flex; flex-wrap:wrap; align-items: center;">
+    <div>
+        <a class="btn btn-primary" href="/categories/create">Nueva Categoria</a>
+    </div>
+    <div class="mx-2">
+        <input style="width: 400px;" type="text" class="form-control" id="titulo" placeholder="Buscar país..." @bind-value="Filter" />
+    </div>
+    <div>
+        <button type="button" class="btn btn-outline-primary" @onclick="ApplyFilterAsync">Buscar</button>
+        <button type="button" class="btn btn-outline-danger" @onclick="CleanFilterAsync">Limpiar</button>
+    </div>
+</div>
+
+
+<Pagination CurrentPage="currentPage"
+            TotalPages="totalPages"
+            SelectedPage="SelectedPage" />
+
 <div class="mb-3">
     <a class="btn btn-primary" href="/categories/create">Adicionar categoria</a>
 </div>
@@ -17,6 +35,7 @@
                 <tr>
                     <th></th>
                     <th>Categoria</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -30,7 +49,7 @@
                         </td>
                         <td>
                             <a href="/categories/edit/@category.Id" class="btn btn-warning"><i class="oi oi-pencil" />Editar</a>
-                            <button class="btn btn-danger" @onclick=@(() => DeleteAsync(category))><i class="oi oi-trash" />Borrar</button>
+                            <button class="btn btn-danger" @onclick=@(() => Delete(category))><i class="oi oi-trash" />Borrar</button>
                         </td>
                     </tr>
 
@@ -46,10 +65,55 @@
 
 @code {
     public List<Category>? categories { get; set; }
+    private int currentPage = 1;
+    private int totalPages;
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string Page { get; set; } = "";
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string Filter { get; set; } = "";
 
     protected async override Task OnInitializedAsync()
     {
         await Load();
+    }
+
+    private async Task SelectedPage(int page)
+    {
+        currentPage = page;
+        await Load(page);
+    }
+
+    private async Task Load(int page = 1) // inicio de la pagina
+    {
+        if (!string.IsNullOrWhiteSpace(Page))
+        {
+            page = Convert.ToInt32(Page);
+        }
+
+        string url1 = string.Empty;
+        string url2 = string.Empty;
+
+        if (string.IsNullOrEmpty(Filter))
+        {
+            url1 = $"api/categories?page={page}";
+            url2 = $"api/categories/totalPages";
+        }
+        else
+        {
+            url1 = $"api/categories?page={page}&filter={Filter}";
+            url2 = $"api/categories/totalPages?filter={Filter}";
+        }
+
+
+
+        var responseHppt = await repository.Get<List<Category>>(url1);
+        var responseHppt2 = await repository.Get<int>(url2);
+        categories = responseHppt.Response!;
+        totalPages = responseHppt2.Response!;
     }
 
     private async Task Load()
@@ -58,7 +122,8 @@
         categories = responseHppt.Response!;
     }
 
-    private async Task DeleteAsync(Category category)
+
+    private async Task Delete(Category category)
     {
         var result = await swal.FireAsync(new SweetAlertOptions
             {
@@ -93,5 +158,17 @@
         {
             await Load();
         }
+    }
+    private async Task CleanFilterAsync()
+    {
+        Filter = string.Empty;
+        await ApplyFilterAsync();
+    }
+
+    private async Task ApplyFilterAsync()
+    {
+        int page = 1;
+        await Load(page);
+        await SelectedPage(page);
     }
 }
