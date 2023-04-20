@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StoresG1.Shared.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,6 +17,11 @@ namespace StoresG8.Shared.Entities
         [MaxLength(100, ErrorMessage = "Cuidado el campo {0} no permite más de {1} caracteres ")]  //{1}
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string? Name { get; set; } = null;
+
+        public ICollection<ProductCategory>? ProductCategories { get; set; }
+
+        [Display(Name = "Productos")]
+        public int ProductCategoriesNumber => ProductCategories == null ? 0 : ProductCategories.Count;
 
 
 
