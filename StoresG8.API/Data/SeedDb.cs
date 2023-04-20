@@ -25,13 +25,13 @@ namespace StoresG8.API.Data
         public async Task SeedAsync()
         {
             await _context.Database.EnsureCreatedAsync();
-            //await CheckCountriesAsync();
+           // await CheckCountriesAsync();
         }
 
         private async Task CheckCountriesAsync()
         {  // se comentara para coger menos paises no todos 
-            //if (!_context.Countries.Any())
-            //{
+            if (!_context.Countries.Any())
+            {
 
 
                 Response responseCountries = await _apiService.GetListAsync<CountryResponse>("/v1", "/countries");
@@ -95,7 +95,7 @@ namespace StoresG8.API.Data
             
         
 
-        //}
+        }
     }
 }
 

@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using StoresG8.Shared.Entities;
 using StoresG8.API.Data;
 using Stores.Shared.Entities;
+using StoresG1.API.Helpers;
+using StoresG1.Shared.DTOs;
 
 namespace StoresG8.API.Controllers
 {
@@ -18,18 +20,59 @@ namespace StoresG8.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAsync()
+        public async Task<IActionResult> GetAsync([FromQuery] PaginationDTO pagination)
         {
-            return Ok(await _context.Cities.ToListAsync());
+            var queryable = _context.Cities // RECORRIDO DE PAGINAS DE 1 A 10
+                .AsQueryable();
+
+
+            if (!string.IsNullOrWhiteSpace(pagination.Filter))
+            {
+                queryable = queryable.Where(x => x.Name.ToLower().Contains
+                (pagination.Filter.ToLower()));
+            }
+
+
+            return Ok(await queryable
+                .OrderBy(x => x.Name)
+                .Paginate(pagination)
+                .ToListAsync());
         }
 
+
+
+        [HttpGet("totalPages")] // Contar numeros de paginas 
+        public async Task<ActionResult> GetPages([FromQuery] PaginationDTO pagination)
+        {
+            var queryable = _context.Cities.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(pagination.Filter))
+            {
+                queryable = queryable.Where(x => x.Name.ToLower().Contains(pagination.Filter.ToLower()));
+            }
+
+            double count = await queryable.CountAsync();
+            double totalPages = Math.Ceiling(count / pagination.RecordsNumber);
+            return Ok(totalPages);
+        }
+
+
+
+        // Get FULL hace 
+        [HttpGet("full")]
+        public async Task<ActionResult> GetFull()
+        {
+            return Ok(await _context.Cities
+                .ToListAsync());
+        }
 
 
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetAsync(int id)
         {
-            var city = await _context.Cities.FirstOrDefaultAsync(x => x.Id == id);
+            var city = await _context.Cities
+                .FirstOrDefaultAsync(x => x.Id == id);
             if (city == null)
             {
                 return NotFound();

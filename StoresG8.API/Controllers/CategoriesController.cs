@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using StoresG1.API.Helpers;
+using StoresG1.Shared.DTOs;
 using StoresG8.API.Data;
 using StoresG8.Shared.Entities;
 
@@ -55,11 +57,49 @@ namespace StoresG8.API.Controllers
         // Get Lista
 
         [HttpGet]
-        public async Task<ActionResult> Get()
+        public async Task<IActionResult> GetAsync([FromQuery] PaginationDTO pagination)
         {
+            var queryable = _context.Categories // RECORRIDO DE PAGINAS DE 1 A 10
+                .AsQueryable();
 
-            return Ok(await _context.Categories.ToListAsync());
 
+            if (!string.IsNullOrWhiteSpace(pagination.Filter))
+            {
+                queryable = queryable.Where(x => x.Name.ToLower().Contains
+                (pagination.Filter.ToLower()));
+            }
+
+
+            return Ok(await queryable
+                .OrderBy(x => x.Name)
+                .Paginate(pagination)
+                .ToListAsync());
+        }
+
+
+        [HttpGet("totalPages")] // Contar numeros de paginas 
+        public async Task<ActionResult> GetPages([FromQuery] PaginationDTO pagination)
+        {
+            var queryable = _context.Categories.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(pagination.Filter))
+            {
+                queryable = queryable.Where(x => x.Name.ToLower().Contains(pagination.Filter.ToLower()));
+            }
+
+            double count = await queryable.CountAsync();
+            double totalPages = Math.Ceiling(count / pagination.RecordsNumber);
+            return Ok(totalPages);
+        }
+
+
+
+        // Get FULL hace 
+        [HttpGet("full")]
+        public async Task<ActionResult> GetFull()
+        {
+            return Ok(await _context.Categories
+                .ToListAsync());
         }
 
 

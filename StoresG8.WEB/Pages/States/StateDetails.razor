@@ -13,18 +13,30 @@
 else
 {
     <h3>@state.Name</h3>
-    <div class="mb-2">
-        <a class="btn btn-primary" href="/cities/create/@state.Id">Nueva Ciuadad</a>
-        <a class="btn btn-success" href="/countries/details/@state.CountryId">Regresar</a>
-    </div>
+    <div class="mb-2" style="display: flex; flex-wrap:wrap; align-items: center;">
+        <div>
+            <a class="btn btn-primary" href="/state/create/@state.Id">Nueva Estado</a>
+            <a class="btn btn-success" href="/countries/details/@state.CountryId">Regresar</a>
 
-    <GenericList MyList="cities">
+        </div>
+        <div class="mx-2">
+            <input style="width: 400px;" type="text" class="form-control" id="titulo" placeholder="Buscar país..." @bind-value="Filter" />
+        </div>
+        <div>
+            <button type="button" class="btn btn-outline-primary" @onclick="ApplyFilterAsync">`Buscar</button>
+            <button type="button" class="btn btn-outline-danger" @onclick="CleanFilterAsync">Limpiar</button>
+        </div>
+    </div>
+    
+
+   <GenericList MyList="cities">
         <Body>
             <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>Ciudad</th>
-                        <th></th>
+                        <th style="width:220px">Ciudades</th> <!--nuevo-->
+                        <th style="width:300px"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,18 +61,58 @@ else
 @code {
     private State? state;
     private List<City>? cities;
+    private int currentPage = 1; //nuevo
+    private int totalPages;
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string Page { get; set; } = "";
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string Filter { get; set; } = "";
+
 
     [Parameter]
     public int StateId { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadAsync();
+        await Load();
     }
 
-    private async Task LoadAsync()
+    private async Task SelectedPage(int page) //nuevo
     {
+        currentPage = page;
+        await Load(page);
+    }
+
+    private async Task Load(int page = 1)
+    {
+        
+        if (!string.IsNullOrWhiteSpace(Page))//nuevo
+        {
+            page = Convert.ToInt32(Page);
+        }
+
+        string url1 = string.Empty;
+        string url2 = string.Empty;
+
+        if (string.IsNullOrEmpty(Filter))
+        {
+            url1 = $"api/states?page={page}";
+            url2 = $"api/states/totalPages";
+        }
+        else
+        {
+            url1 = $"api/states?page={page}&filter={Filter}";
+            url2 = $"api/states/totalPages?filter={Filter}";
+        }
+        
+        //---
+        
         var responseHttp = await repository.Get<State>($"/api/states/{StateId}");
+        
         if (responseHttp.Error)
         {
             if (responseHttp.HttpResponseMessage.StatusCode == HttpStatusCode.NotFound)
@@ -107,7 +159,20 @@ else
             }
         }
 
-        await LoadAsync();
+        await Load();
+    }
+
+    private async Task CleanFilterAsync()
+    {
+        Filter = string.Empty;
+        await ApplyFilterAsync();
+    }
+
+    private async Task ApplyFilterAsync()
+    {
+        int page = 1;
+        await Load(page);
+        await SelectedPage(page);
     }
 }
 
