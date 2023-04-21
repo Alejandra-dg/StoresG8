@@ -20,15 +20,6 @@ namespace StoresG8.API.Controllers
             _context = context;
         }
 
-        /*
-        [HttpGet]
-        public async Task<IActionResult> GetAsync()
-        {
-            return Ok(await _context.States
-                .Include(x => x.Cities)
-                .ToListAsync());
-        }
-        */
 
         [HttpGet] //Nuevo
         public async Task<IActionResult> GetAsync([FromQuery] PaginationDTO pagination)
@@ -42,6 +33,12 @@ namespace StoresG8.API.Controllers
             {
                 queryable = queryable.Where(x => x.Name.ToLower().Contains
                 (pagination.Filter.ToLower()));
+            }
+
+            //Filtra estados por Id de país
+            if (!string.IsNullOrWhiteSpace(pagination.CountryId))
+            {
+                queryable = queryable.Where(x => x.CountryId == int.Parse(pagination.CountryId));
             }
 
 
@@ -60,6 +57,11 @@ namespace StoresG8.API.Controllers
             if (!string.IsNullOrWhiteSpace(pagination.Filter))
             {
                 queryable = queryable.Where(x => x.Name.ToLower().Contains(pagination.Filter.ToLower()));
+            }
+
+            if (!string.IsNullOrWhiteSpace(pagination.CountryId))
+            {
+                queryable = queryable.Where(x => x.CountryId == int.Parse(pagination.CountryId));
             }
 
             double count = await queryable.CountAsync();

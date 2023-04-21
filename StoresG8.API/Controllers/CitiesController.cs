@@ -32,6 +32,10 @@ namespace StoresG8.API.Controllers
                 (pagination.Filter.ToLower()));
             }
 
+            if (!string.IsNullOrWhiteSpace(pagination.StateId))
+            {
+                queryable = queryable.Where(x => x.StateId == int.Parse(pagination.StateId));
+            }
 
             return Ok(await queryable
                 .OrderBy(x => x.Name)
@@ -49,6 +53,11 @@ namespace StoresG8.API.Controllers
             if (!string.IsNullOrWhiteSpace(pagination.Filter))
             {
                 queryable = queryable.Where(x => x.Name.ToLower().Contains(pagination.Filter.ToLower()));
+            }
+
+            if (!string.IsNullOrWhiteSpace(pagination.StateId))
+            {
+                queryable = queryable.Where(x => x.StateId == int.Parse(pagination.StateId));
             }
 
             double count = await queryable.CountAsync();

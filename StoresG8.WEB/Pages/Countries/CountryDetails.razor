@@ -1,4 +1,4 @@
-﻿@page "/countries/details/{Id:int}"
+﻿@page "/countries/details/{CountryId:int}"
 @using Stores.Shared.Entities;
 @using StoresG8.Shared.Entities;
 @using System.Net;
@@ -41,10 +41,8 @@ else
                 <thead>
                     <tr>
                         <th> Departamento/Ciudades</th>
-                        <th>Ciudades</th>
-                        <th style="width:220px">Estados / Departamentos</th>
-                        <th style="width:300px"></th>
-                        <th></th>
+                        <th style="width:220px">Ciudades</th>
+                        <th style="width:300px">Estados / Departamentos</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -72,14 +70,14 @@ else
 
 @code {
     private Country? country;
-    private List<State>? states;
+    public List<State>? states { get; set; }
 
 
     private int currentPage = 1;
     private int totalPages;
 
     [Parameter]
-    public int Id { get; set; }
+    public int CountryId { get; set; }
 
     [Parameter]
     [SupplyParameterFromQuery]
@@ -112,33 +110,36 @@ else
 
         if (string.IsNullOrEmpty(Filter))
         {
-            url1 = $"api/states?page={page}";
-            url2 = $"api/states/totalPages";
+            url1 = $"api/states?page={page}&CountryId={CountryId}";
+            url2 = $"api/states/totalPages?CountryId={CountryId}";
         }
         else
         {
-            url1 = $"api/states?page={page}&filter={Filter}";
-            url2 = $"api/states/totalPages?filter={Filter}";
+            url1 = $"api/states?page={page}&filter={Filter}&CountryId={CountryId}";
+            url2 = $"api/states/totalPages?filter={Filter}&CountryId={CountryId}";
         }
 
 
-        var responseHttp = await repository.Get<Country>($"/api/countries/{Id}");
-        if (responseHttp.Error)
+        var responseHppt = await repository.Get<List<State>>(url1);
+        var responseHppt2 = await repository.Get<int>(url2);
+        var responseHttp3 = await repository.Get<Country>($"/api/countries/{CountryId}");
+        if (responseHttp3.Error)
         {
-            if (responseHttp.HttpResponseMessage.StatusCode == HttpStatusCode.NotFound)
+            if (responseHttp3.HttpResponseMessage.StatusCode == HttpStatusCode.NotFound)
             {
                 navigationManager.NavigateTo("/countries");
                 return;
             }
 
-            var message = await responseHttp.GetErrorMessageAsync();
+            var message = await responseHttp3.GetErrorMessageAsync();
             await sweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
             return;
         }
+        states = responseHppt.Response!.ToList();
+        totalPages = responseHppt2.Response!;
+        country = responseHttp3.Response;
 
-        country = responseHttp.Response;
-        states = country!.States!.ToList(); // Estados NULL nos sale error
-    }
+        }
 
     private async Task DeleteAsync(int id)
     {

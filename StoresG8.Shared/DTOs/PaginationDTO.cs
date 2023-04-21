@@ -6,9 +6,13 @@
 
         public int Page { get; set; } = 1;
 
-        public int RecordsNumber { get; set; } = 3; //Modificación de los resultados de la paginación
+        public int RecordsNumber { get; set; } = 10; //Modificación de los resultados de la paginación
 
         public string? Filter { get; set; }
+
+        public string? CountryId { get; set; }
+
+        public string? StateId { get; set;}
 
     }
 }

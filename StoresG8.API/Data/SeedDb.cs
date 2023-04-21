@@ -25,7 +25,7 @@ namespace StoresG8.API.Data
         public async Task SeedAsync()
         {
             await _context.Database.EnsureCreatedAsync();
-           // await CheckCountriesAsync();
+            //await CheckCountriesAsync();
         }
 
         private async Task CheckCountriesAsync()

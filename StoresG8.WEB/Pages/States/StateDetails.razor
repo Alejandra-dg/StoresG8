@@ -23,11 +23,16 @@ else
             <input style="width: 400px;" type="text" class="form-control" id="titulo" placeholder="Buscar país..." @bind-value="Filter" />
         </div>
         <div>
-            <button type="button" class="btn btn-outline-primary" @onclick="ApplyFilterAsync">`Buscar</button>
+            <button type="button" class="btn btn-outline-primary" @onclick="ApplyFilterAsync">Buscar</button>
             <button type="button" class="btn btn-outline-danger" @onclick="CleanFilterAsync">Limpiar</button>
         </div>
     </div>
-    
+
+
+    <Pagination CurrentPage="currentPage"
+            TotalPages="totalPages"
+            SelectedPage="SelectedPage" />
+
 
    <GenericList MyList="cities">
         <Body>
@@ -36,7 +41,6 @@ else
                     <tr>
                         <th>Ciudad</th>
                         <th style="width:220px">Ciudades</th> <!--nuevo-->
-                        <th style="width:300px"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,9 +64,13 @@ else
 
 @code {
     private State? state;
-    private List<City>? cities;
+    private List<City>? cities { get; set;}
+
     private int currentPage = 1; //nuevo
     private int totalPages;
+
+    [Parameter]
+    public int StateId { get; set; }
 
     [Parameter]
     [SupplyParameterFromQuery]
@@ -71,10 +79,6 @@ else
     [Parameter]
     [SupplyParameterFromQuery]
     public string Filter { get; set; } = "";
-
-
-    [Parameter]
-    public int StateId { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -100,19 +104,22 @@ else
 
         if (string.IsNullOrEmpty(Filter))
         {
-            url1 = $"api/states?page={page}";
-            url2 = $"api/states/totalPages";
+            url1 = $"api/cities?page={page}&StateId={StateId}";
+            url2 = $"api/cities/totalPages?StateId={StateId}";
         }
         else
         {
-            url1 = $"api/states?page={page}&filter={Filter}";
-            url2 = $"api/states/totalPages?filter={Filter}";
+            url1 = $"api/cities?page={page}&filter={Filter}&StateId={StateId}";
+            url2 = $"api/cities/totalPages?filter={Filter}&StateId={StateId}";
         }
         
         //---
         
         var responseHttp = await repository.Get<State>($"/api/states/{StateId}");
-        
+        var responseHppt = await repository.Get<List<City>>(url1);
+        var responseHppt2 = await repository.Get<int>(url2);
+
+
         if (responseHttp.Error)
         {
             if (responseHttp.HttpResponseMessage.StatusCode == HttpStatusCode.NotFound)
@@ -126,8 +133,10 @@ else
             return;
         }
 
+        cities = responseHppt.Response!.ToList();
+        totalPages = responseHppt2.Response!;
         state = responseHttp.Response;
-        cities = state!.Cities!.ToList();
+        
     }
 
     private async Task DeleteAsync(int cityId)

@@ -32,6 +32,7 @@ SeedData(app);
 
 void SeedData(WebApplication app)
 {
+    Console.WriteLine("Seeding data");
     IServiceScopeFactory? scopedFactory = app.Services.GetService<IServiceScopeFactory>();
 
     using (IServiceScope? scope = scopedFactory!.CreateScope())
